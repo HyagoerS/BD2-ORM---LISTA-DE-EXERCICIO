@@ -1,7 +1,8 @@
 from sqlalchemy import (
-Column, Integer, String, ForeignKey, Float,
-DateTime, Boolean, func, UniqueConstraint
+    Column, Integer, String, ForeignKey, Float,
+    DateTime, Boolean, func, UniqueConstraint
 )
+# Recomenda-se usar a nova forma: from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
 
@@ -18,8 +19,7 @@ class Usuario(Base):
     pedidos = relationship('Pedido', back_populates='usuario')
     
     def __str__(self):
-        return f"Usuario(id={self.id}, nome='{self.nome}',
-email='{self.email}', idade={self.idade}, ativo={self.ativo})"
+        return f"Usuario(id={self.id}, nome='{self.nome}', email='{self.email}', idade={self.idade}, ativo={self.ativo})"
 
 class Produto(Base):
     __tablename__ = 'produtos'
@@ -32,48 +32,40 @@ class Produto(Base):
     criado_em = Column(DateTime, default=datetime.now)
     
     def __str__(self):
-        return f"Produto(id={self.id}, nome='{self.nome}',
-preco={self.preco}, categoria='{self.categoria}',
-estoque={self.estoque}, criado_em={self.criado_em})"
+        # Corrigido: usando aspas triplas para permitir quebra de linha
+        return f"""Produto(id={self.id}, nome='{self.nome}', preco={self.preco}, 
+categoria='{self.categoria}', estoque={self.estoque}, criado_em={self.criado_em})"""
 
 class Pedido(Base):
     __tablename__ = 'pedidos'
     
     id = Column(Integer, primary_key=True)
-    usuario_id = Column(Integer, ForeignKey('usuarios.id'),
-nullable=False)
-
-
-
-    produto_id = Column(Integer, ForeignKey('produtos.id'),
-nullable=False)
+    usuario_id = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
+    produto_id = Column(Integer, ForeignKey('produtos.id'), nullable=False)
     quantidade = Column(Integer, nullable=False)
     status = Column(String(20), default='pendente')
     data_pedido = Column(DateTime, default=datetime.now)
+    
     usuario = relationship('Usuario', back_populates='pedidos')
     produto = relationship('Produto')
 
     __table_args__ = (
-        UniqueConstraint('usuario_id', 'produto_id',
-name='uq_usuario_produto'),
+        UniqueConstraint('usuario_id', 'produto_id', name='uq_usuario_produto'),
     )
 
     def __str__(self):
-        return f"Pedido(id={self.id}, usuario_id={self.usuario_id},
-produto_id={self.produto_id}, quantidade={self.quantidade},
-status='{self.status}', data_pedido={self.data_pedido})"
+        # Corrigido: removida a quebra de linha inválida
+        return f"Pedido(id={self.id}, usuario_id={self.usuario_id}, produto_id={self.produto_id}, quantidade={self.quantidade}, status='{self.status}', data_pedido={self.data_pedido})"
 
 class Avaliacao(Base):
     __tablename__ = 'avaliacoes'
 
     id = Column(Integer, primary_key=True)
-    usuario_id = Column(Integer, ForeignKey('usuarios.id'),
-nullable=False)
+    usuario_id = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
     nota = Column(Integer, nullable=False)
     comentario = Column(String(300))
     usuario = relationship('Usuario')
 
     def __str__(self):
-        return f"Avaliacao(id={self.id}, usuario_id={self.usuario_id},
-nota={self.nota}, comentario='{self.comentario}')"
-
+        # Corrigido: removida a quebra de linha inválida
+        return f"Avaliacao(id={self.id}, usuario_id={self.usuario_id}, nota={self.nota}, comentario='{self.comentario}')"
