@@ -57,7 +57,7 @@ if produto_mais_barato:
 
 #Questão 6
 
-ultimo_pedido = session.query(Pedido).order_by(Pedido.data_pedido.desc()).first()
+ultimo_pedido = session.query(Pedido).filter(Pedido.data_pedido.desc()).first()
 
 if ultimo_pedido:
     print(f"Ultimo pedido feito por {ultimo_pedido.usuario.nome} em {ultimo_pedido.data_pedido}")
@@ -81,7 +81,7 @@ else:
 produto = session.query(Produto).filter(Produto.id == 5, Produto.estoque > 0).first()
 
 if produto == True:
-    print(f"Sim! O produto '{produto.nome}' (ID 5) tem {produto.estoque} unidades em estoque.")'''
+    print(f"Sim! O produto '{produto.nome}' (ID 5) tem {produto.estoque} unidades em estoque.")
 
 #Questão 9
 
@@ -93,7 +93,13 @@ if pedido:
     print(f"Data: {pedido.data_pedido}")
     print("Dados do Usuário")
     print(f"Nome: {pedido.usuario.nome}")
-    print(f"Email: {pedido.usuario.email}")
+    print(f"Email: {pedido.usuario.email}")'''
 
 #Função Filter()
 #Questão 10
+
+usuarios_intervalo = session.query(Usuario).filter(Usuario.idade >= 25, Usuario.idade <= 35).all()
+
+if usuarios_intervalo:
+    for usuario in usuarios_intervalo:
+        print(f"Nome: {usuario.nome} Idade: {usuario.idade} anos")
