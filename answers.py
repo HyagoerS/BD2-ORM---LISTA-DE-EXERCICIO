@@ -9,7 +9,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 #Função: all()
-'''print("Questão 1")
+'''#Questão 1
 
 produtos = session.query(Produto).all()
 
@@ -17,7 +17,7 @@ for produto in produtos:
     print(produto)
 
 
-print("Questão 2")
+#Questão 2
 
 usuarios_ativos = session.query(Usuario).filter(
     Usuario.ativo == True, 
@@ -27,7 +27,7 @@ usuarios_ativos = session.query(Usuario).filter(
 for usuario in usuarios_ativos:
     print(usuario)
 
-print("Questão 3")
+#Questão 3
 
 pedidos = session.query(Pedido).where(
 #deposis
@@ -35,13 +35,43 @@ pedidos = session.query(Pedido).where(
 ).all()
 
 for pedido in pedidos:
-    print(pedido) '''
+    print(pedido) 
 
 #Função: first()
-print("Questão 4")
+#Questão 4
+
+primeiro_usuario = session.query(Usuario).filter(Usuario.id == 1).first()
+
+if primeiro_usuario:
+    print(f"Primeiro usuário encontrado: {primeiro_usuario.nome}")
+else:
+    print("Nenhum usuário encontrado.")'''
 
 
-primeiro_usuario = session.query(Usuario).filter_by(id=1).first(
-    if primeiro_usuario:
-        print(Usuario.nome)
-)
+#Questão 5
+produto_mais_barato = session.query(Produto).filter(Produto.categoria == 'eletrônicos').order_by(Produto.preco.asc()).first()
+
+if produto_mais_barato:
+    print(f"O produto mais barato de eletrônicos é: {produto_mais_barato.nome}")
+    print(f"Preço: R$ {produto_mais_barato.preco}")
+
+#Questão 6
+
+ultimo_pedido = session.query(Pedido).order_by(Pedido.data_pedido.desc()).first()
+
+if ultimo_pedido:
+    print(f"Ultimo pedido feito por {ultimo_pedido.usuario.nome} em {ultimo_pedido.data_pedido}")
+
+#Função Get(PK)
+#Questão 7
+
+usuario_7 = session.get(Usuario, 7)
+
+if usuario_7:
+    print(f"Dados do Usuário ID 7:")
+    print(f"Nome: {usuario_7.nome}")
+    print(f"Email: {usuario_7.email}")
+    print(f"Idade: {usuario_7.idade}")
+    print(f"Ativo: {'Sim' if usuario_7.ativo else 'Não'}")
+else:
+    print("Usuário com ID 7 não encontrado.")
