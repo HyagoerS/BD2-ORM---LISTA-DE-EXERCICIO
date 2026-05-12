@@ -45,7 +45,7 @@ primeiro_usuario = session.query(Usuario).filter(Usuario.id == 1).first()
 if primeiro_usuario:
     print(f"Primeiro usuário encontrado: {primeiro_usuario.nome}")
 else:
-    print("Nenhum usuário encontrado.")'''
+    print("Nenhum usuário encontrado.")
 
 
 #Questão 5
@@ -75,3 +75,25 @@ if usuario_7:
     print(f"Ativo: {'Sim' if usuario_7.ativo else 'Não'}")
 else:
     print("Usuário com ID 7 não encontrado.")
+
+#Questão 8
+
+produto = session.query(Produto).filter(Produto.id == 5, Produto.estoque > 0).first()
+
+if produto == True:
+    print(f"Sim! O produto '{produto.nome}' (ID 5) tem {produto.estoque} unidades em estoque.")'''
+
+#Questão 9
+
+pedido = session.query(Pedido).filter(Pedido.id == 3).first()
+
+if pedido:
+    print(f"Status: {pedido.status}")
+    print(f"Quantidade: {pedido.quantidade}")
+    print(f"Data: {pedido.data_pedido}")
+    print("Dados do Usuário")
+    print(f"Nome: {pedido.usuario.nome}")
+    print(f"Email: {pedido.usuario.email}")
+
+#Função Filter()
+#Questão 10
